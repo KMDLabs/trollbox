@@ -1,10 +1,10 @@
 #!/bin/bash
 #arg1 is chain
-#arg2 is length of pubkey to show, people can impersonate names, but not pubkeys
-#arg3 is oracleid
+#arg2 is oracleid
+#arg3 is length of pubkey to show, people can impersonate names, but not pubkeys. Default is 6, make it higher if you want to be sure you're talking to the right person
 chain=$1
-verlen=$2
-orclid=$3
+orclid=$2
+verlen=$3
 latest=""
 n=0
 while true; do
