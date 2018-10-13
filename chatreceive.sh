@@ -5,7 +5,6 @@
 chain=$1
 orclid=$2
 verlen=${3:-6}
-${1:-foo}
 latest=""
 n=0
 while true; do
