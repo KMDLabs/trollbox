@@ -1,6 +1,10 @@
 #!/bin/bash
+#arg1 is chain
+#arg2 is length of pubkey to show, people can impersonate names, but not pubkeys
+#arg3 is oracleid
 chain=$1
-orclid=742d2317a734fce4f6f99862dd878ed58538434dc855cd76879ad68be3f1bff4
+verlen=$2
+orclid=$3
 latest=""
 n=0
 while true; do
@@ -18,7 +22,8 @@ while true; do
 						if [[ $kv = "null" ]]; then
 							echo "[${pubsarray[$i]}]:${latest[$i]}"
 						else
-          						echo "[$kv]:${latest[$i]}"
+							ver=$(echo ${pubsarray[$i]} | head -c $verlen)
+          						echo "[$kv-$ver]:${latest[$i]}"
 						fi
         				fi
 			fi
