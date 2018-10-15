@@ -21,7 +21,7 @@ while true; do
         				if [[ $n != 0 ]]; then
 						kv=$(komodo-cli -ac_name=$chain kvsearch ${pubsarray[$i]} | jq -r .value)
 						if [[ $kv = "null" ]]; then
-							echo "[${pubsarray[$i]}]:${latest[$i]}"
+          						echo "$(date -d @$(echo ${latest[$i]} | head -c 10) $dateformat)[${pubsarray[$i]}]:$(echo "${latest[$i]}" | cut -c 11-)"
 						else
 							ver=$(echo ${pubsarray[$i]} | head -c $verlen)
           						echo "$(date -d @$(echo ${latest[$i]} | head -c 10) $dateformat)[$kv-$ver]:$(echo "${latest[$i]}" | cut -c 11-)"
