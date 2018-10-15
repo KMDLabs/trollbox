@@ -2,7 +2,7 @@
 #arg1 is chain
 #arg2 is oracleid
 #arg3 is length of pubkey to show, people can impersonate names, but not pubkeys. Default is 6, make it higher if you want to be sure you're talking to the right person
-chain={$1:-STAKEDB1}
+chain=${1:-STAKEDB1}
 orclid=${2:-742d2317a734fce4f6f99862dd878ed58538434dc855cd76879ad68be3f1bff4}
 verlen=${3:-6}
 latest=""
