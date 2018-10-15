@@ -3,7 +3,7 @@ orclid=$2
 chain=$1
 while true; do
 read -rp "type message: " message
-echo "$message" > msg
+echo "$(date +%s)$message" > msg
 xxd -p msg | tr -d '\n' > rawhex
 hexraw=$(cat rawhex)
 declen=$(($(xxd -p msg | tr -d '\n' | wc -c) / 2 ))

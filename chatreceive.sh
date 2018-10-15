@@ -5,6 +5,7 @@
 chain=${1:-STAKEDB1}
 orclid=${2:-742d2317a734fce4f6f99862dd878ed58538434dc855cd76879ad68be3f1bff4}
 verlen=${3:-6}
+dateformat=${4:-+%T-%Z}
 latest=""
 n=0
 while true; do
@@ -23,7 +24,7 @@ while true; do
 							echo "[${pubsarray[$i]}]:${latest[$i]}"
 						else
 							ver=$(echo ${pubsarray[$i]} | head -c $verlen)
-          						echo "[$kv-$ver]:${latest[$i]}"
+          						echo "$(date -d @$(echo ${latest[$i]} | head -c 10) $dateformat)[$kv-$ver]:$(echo "${latest[$i]}" | cut -c 11-)"
 						fi
         				fi
 			fi
