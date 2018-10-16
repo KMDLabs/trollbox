@@ -9,11 +9,11 @@ dateformat=${4:-+%T-%Z}
 latest=""
 n=0
 while true; do
-	pubs=$(komodo-cli -ac_name=$chain oraclesinfo $orclid | jq -r '.registered | .[] | .publisher')
+	pubs=$(komodo-cli -ac_name=$chain oraclesinfo $orclid | jq -r '.registered | unique' | jq -r '.[] | .publisher')
 	pubsarray=(${pubs///n/ })
-	batons=$(komodo-cli -ac_name=$chain oraclesinfo $orclid | jq -r '.registered | .[] | .batontxid')
+	batons=$(komodo-cli -ac_name=$chain oraclesinfo $orclid | jq -r '.registered | unique' | jq -r '.[] | .batontxid')
 	batonarray=(${batons///n/ })
-	len=$(komodo-cli -ac_name=$chain oraclesinfo $orclid | jq -r '[.registered | .[] | .publisher] | length')
+	len=$(komodo-cli -ac_name=$chain oraclesinfo $orclid | jq -r '.registered | unique' | jq -r '.[] | .publisher'|wc -l)
 	for i in $(seq 0 $(( $len - 1 ))); do
 		message[$i]=$(komodo-cli -ac_name=$chain oraclessamples $orclid ${batonarray[$i]} 1 | jq -r '.samples[0][0]')
 			if [ "${message[$i]}" != "${latest[$i]}" ]; then
@@ -21,7 +21,7 @@ while true; do
         				if [[ $n != 0 ]]; then
 						kv=$(komodo-cli -ac_name=$chain kvsearch ${pubsarray[$i]} | jq -r .value)
 						if [[ $kv = "null" ]]; then
-          						echo "$(date -d @$(echo ${latest[$i]} | head -c 10) $dateformat)[${pubsarray[$i]}]:$(echo "${latest[$i]}" | cut -c 11-)"
+							echo "$(date -d @$(echo ${latest[$i]} | head -c 10) $dateformat)[${pubsarray[$i]}]:$(echo "${latest[$i]}" | cut -c 11-)"
 						else
 							ver=$(echo ${pubsarray[$i]} | head -c $verlen)
           						echo "$(date -d @$(echo ${latest[$i]} | head -c 10) $dateformat)[$kv-$ver]:$(echo "${latest[$i]}" | cut -c 11-)"
