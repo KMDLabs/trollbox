@@ -12,7 +12,6 @@ def def_credentials(chain):
         coin_config_file = str(ac_dir + '/komodo.conf')
     else:
         coin_config_file = str(ac_dir + '/' + chain + '/' + chain + '.conf')
-        print(coin_config_file)
     #define rpc creds
     with open(coin_config_file, 'r') as f:
         #print("Reading config file for credentials:", coin_config_file)
