@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import sys
 import getconf
+import pprint
 
 CHAIN = sys.argv[1]
-PUBKEY = sys.argv[2]
-VALUE = sys.argv[3]
-PASSWORD = sys.argv[4]
+#PUBKEY = sys.argv[2]
+VALUE = sys.argv[2]
+PASSWORD = sys.argv[3]
 RPCURL = getconf.def_credentials(CHAIN)
 
 def kvupdate_rpc(key, value, days, password):
@@ -23,11 +24,25 @@ def kvupdate_rpc(key, value, days, password):
     kvupdate_result = getconf.post_rpc(RPCURL, kvupdate_payload)
     return(kvupdate_result)
 
-try:
-    kvupdate_result = kvupdate_rpc(PUBKEY, VALUE, 100, PASSWORD)
-    rawtx = kvupdate_result['hex']
-    sendraw_result = sendrawtx_rpc(RPCURL, rawtx)
-except:
-    kvupdate_result = kvupdate_rpc(PUBKEY, VALUE, 100, PASSWORD)
-    print(kvupdate_result['error'])
+
+# create getinfo payload
+getinfo_payload = {
+    "jsonrpc": "1.0",
+    "id": "python",
+    "method": "getinfo",
+    "params": []}
+
+getinfo_result = getconf.post_rpc(RPCURL, getinfo_payload)
+#print(getinfo_result)
+#TODO error if pubkey isn't set
+pubkey = getinfo_result['result']['pubkey']
+
+
+#try:
+kvupdate_result = kvupdate_rpc(pubkey, VALUE, 100, PASSWORD)
+pprint.pprint(kvupdate_result['result'])
+
+#except:
+#    kvupdate_result = kvupdate_rpc(pubkey, VALUE, 100, PASSWORD)
+#    print(kvupdate_result['error'])
 

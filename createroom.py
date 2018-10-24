@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#oraclescreate name description format
 import sys
 import getconf
 
@@ -8,7 +7,7 @@ ROOMNAME = sys.argv[2]
 DESCRIPTION = sys.argv[3]
 RPCURL = getconf.def_credentials(CHAIN)
 
-def oraclescreate_rpc(name, description):
+def oraclescreate_rpc(name, description, oracle_type):
     # create dynamic oraclessamples payload
     description = "CHAT " + description
     oraclescreate_payload = {
@@ -18,7 +17,7 @@ def oraclescreate_rpc(name, description):
         "params": [
             name,
             description,
-            'S']}
+            oracle_type]}
     # make oraclessamples rpc call
     oraclescreate_result = getconf.post_rpc(RPCURL, oraclescreate_payload)
     return(oraclescreate_result['result'])
@@ -32,6 +31,10 @@ def sendrawtx_rpc(RPCURL, rawtx):
         "params": [rawtx]}
     return(getconf.post_rpc(RPCURL, sendrawpayload))
 
-create_result = oraclescreate_rpc(ROOMNAME, DESCRIPTION)
-sendraw_result = sendrawtx_rpc(RPCURL, create_result['hex'])
-print(sendraw_result)
+try:
+    create_result = oraclescreate_rpc(ROOMNAME, DESCRIPTION, 'S')
+    sendraw_result = sendrawtx_rpc(RPCURL, create_result['hex'])
+    print(sendraw_result)
+except:
+    create_result = oraclescreate_rpc(ROOMNAME, DESCRIPTION, 'S')
+    print(create_result['error'])

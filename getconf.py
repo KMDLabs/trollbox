@@ -43,4 +43,4 @@ def sendrawtx_rpc(RPCURL, rawtx):
         "id": "python",
         "method": "sendrawtransaction",
         "params": [rawtx]}
-    return(getconf.post_rpc(RPCURL, sendrawpayload))
+    return(post_rpc(RPCURL, sendrawpayload))
