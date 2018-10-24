@@ -3,12 +3,15 @@
 #-ac_name=STAKEDED gettransaction 58200ac8742537be73b7dc4f9b0f07548b478c78972e5b3da7a9163b4aeaf0ac
 #oraclessubscribe oracletxid publisher amount
 import sys
-import getconf
+#import getconf
+#TODO
+from getconf import *
 
 CHAIN = sys.argv[1]
 ORCLID = sys.argv[2]
-PUBKEY = sys.argv[3]
-RPCURL = getconf.def_credentials(CHAIN)
+UTXOS = sys.argv[3]
+RPCURL = def_credentials(CHAIN)
+PUBKEY = getpubkey_rpc(RPCURL)
 
 def oraclessubscribe_rpc(ROOM_TXID):
     # create oraclessubscribe payload
@@ -21,7 +24,7 @@ def oraclessubscribe_rpc(ROOM_TXID):
             PUBKEY,
             str(1)]}
     # make oraclessubscribe rpc call
-    oraclessubscribe_result = getconf.post_rpc(RPCURL, oraclessubscribe_payload)
+    oraclessubscribe_result = post_rpc(RPCURL, oraclessubscribe_payload)
     return(oraclessubscribe_result['result'])
 
 def oraclesregister_rpc(ORCLID):
@@ -34,9 +37,13 @@ def oraclesregister_rpc(ORCLID):
             ORCLID,
             str(10000)]}
     # make oraclessamples rpc call
-    oraclesregister_result = getconf.post_rpc(RPCURL, oraclesregister_payload)
+    oraclesregister_result = post_rpc(RPCURL, oraclesregister_payload)
     return(oraclesregister_result['result'])
 
+#getinfo_result = post_rpc(RPCURL)
+#print(getinfo_result)
+#TODO error if pubkey isn't set
+pubkey = getpubkey_rpc(RPCURL)
 # create getinfo payload
 getinfo_payload = {
     "jsonrpc": "1.0",
@@ -54,20 +61,22 @@ oraclesregister_result = oraclesregister_rpc(ORCLID)
 #print(oraclesregister_result)
 rawtx = oraclesregister_result['hex']
 #print(rawtx)
-sendraw_result = getconf.sendrawtx_rpc(RPCURL, rawtx)
+sendraw_result = sendrawtx_rpc(RPCURL, rawtx)
 print('oraclesregister:', sendraw_result)
 
 oraclesregister_txid = sendraw_result['result']
 
+for i in range(int(UTXOS)):
+    print(i)
 
-try:
-    subscribe_result = oraclessubscribe_rpc(ORCLID)
-    #print(subscribe_result)
-    rawtx = subscribe_result['hex']
-    sendraw_result = getconf.sendrawtx_rpc(RPCURL, rawtx)
-    print('oraclessubscribe:', sendraw_result)
+    try:
+        subscribe_result = oraclessubscribe_rpc(ORCLID)
+        #print(subscribe_result)
+        rawtx = subscribe_result['hex']
+        sendraw_result = sendrawtx_rpc(RPCURL, rawtx)
+        print('oraclessubscribe:', sendraw_result)
 
-except:
-    subscribe_result = oraclessubscribe_rpc(ORCLID)
-    print(subscribe_result['error'])
+    except:
+        subscribe_result = oraclessubscribe_rpc(ORCLID)
+        print(subscribe_result['error'])
 

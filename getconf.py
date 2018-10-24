@@ -44,3 +44,15 @@ def sendrawtx_rpc(RPCURL, rawtx):
         "method": "sendrawtransaction",
         "params": [rawtx]}
     return(post_rpc(RPCURL, sendrawpayload))
+
+# Return current -pubkey=
+def getpubkey_rpc(RPCURL):
+    # create getinfo payload
+    getinfo_payload = {
+        "jsonrpc": "1.0",
+        "id": "python",
+        "method": "getinfo",
+        "params": []}
+    getinfo_result = post_rpc(RPCURL, getinfo_payload)
+    
+    return(getinfo_result['result']['pubkey'])
