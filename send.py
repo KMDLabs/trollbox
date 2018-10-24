@@ -48,6 +48,8 @@ while True:
     # make oraclesdata rpc call, assign result to rawtx
     call_result = getconf.post_rpc(RPCURL, orclpayload)
 
+    rawtx = ''
+
     try:
         call_result = getconf.post_rpc(RPCURL, orclpayload)
         #print(call_result)
