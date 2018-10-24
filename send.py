@@ -37,7 +37,7 @@ while True:
     #convert big endian length to little endian, append rawhex to little endian length
     lilend = bigend[2] + bigend[3] + bigend[0] + bigend[1]
     fullhex = lilend + rawhex
-    print(fullhex)
+    #print(fullhex)
 
     orclpayload = {
         "jsonrpc": "1.0",
@@ -48,27 +48,16 @@ while True:
     # make oraclesdata rpc call, assign result to rawtx
     call_result = getconf.post_rpc(RPCURL, orclpayload)
 
-    #try:
-     #   print(call_result['result'])
-      #  rawtx = call_result['result']['hex']
-       # print(rawtx)
-
-    #except:
-     #   print(call_result['result'])
-      #  rawtx = call_result['result']['hex']
-       # print('waht', rawtx)
-
     try:
         call_result = getconf.post_rpc(RPCURL, orclpayload)
-        print(call_result)
+        #print(call_result)
         rawtx = call_result['result']['hex']
         sendraw_result = getconf.sendrawtx_rpc(RPCURL, rawtx)
-        print('oraclesdata:', sendraw_result)
+        #print('oraclesdata:', sendraw_result)
 
     except:
         call_result = getconf.post_rpc(RPCURL, orclpayload)
-        print(call_result['hex'])
-        print('ugh')
+        #print(call_result['hex'])
 
     sendrawpayload = {
         "jsonrpc": "1.0",
