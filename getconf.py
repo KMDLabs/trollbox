@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import re
 import os
+import requests
+import json
+
 def def_credentials(chain):
 
     #TODO: add osx/windows support for ac_dir
     ac_dir = os.environ['HOME'] + '/.komodo'
-    #chain = 'STAKEDW1'
 
     # define config file path
     if chain == 'KMD':
@@ -24,3 +26,11 @@ def def_credentials(chain):
             elif re.search('rpcport', l):
                 rpcport = l.replace('rpcport=', '')
     return('http://' + rpcuser + ':' + rpcpassword + '@127.0.0.1:' + rpcport)
+
+# define function that posts json data
+def post_rpc(url, payload, auth=None):
+    try:
+        r = requests.post(url, data=json.dumps(payload), auth=auth)
+        return(json.loads(r.text))
+    except Exception as e:
+        raise Exception("Couldn't connect to " + url + ": ", e)

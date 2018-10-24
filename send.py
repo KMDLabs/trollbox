@@ -5,25 +5,19 @@ import subprocess
 import requests
 import json
 import time
-from getconf import *
+import getconf
 
 orclid = sys.argv[2]
 chain = sys.argv[1]
 
-
 # construct daemon url
-rpcurl = def_credentials(chain)
-
-# define function that posts json data
-def post_rpc(url, payload, auth=None):
-    try:
-        r = requests.post(url, data=json.dumps(payload), auth=auth)
-        return(json.loads(r.text))
-    except Exception as e:
-        raise Exception("Couldn't connect to " + url + ": ", e)
+rpcurl = getconf.def_credentials(chain)
 
 while True:
-    message = "\"" + str(int(time.time())) + "." + input("Type message: ") + "\""
+    #message = "\"" + str(int(time.time())) + "." + input("Type message: ") + "\""
+    message = "{\"t\": " + str(int(time.time())) + ", \"m\": \"" + input("Type message: ") + "\"}"
+
+#{"timestamp": 341234, "message": "iojasdoiaj"}
 
     #convert message to hex
     rawhex = codecs.encode(message).hex()
@@ -56,7 +50,7 @@ while True:
         "params": [orclid, fullhex]}
 
     # make oraclesdata rpc call, assign result to rawtx
-    call_result = post_rpc(rpcurl, orclpayload)
+    call_result = getconf.post_rpc(rpcurl, orclpayload)
     rawtx = call_result['result']['hex']
     
     sendrawpayload = {
@@ -65,5 +59,5 @@ while True:
         "method": "sendrawtransaction",
         "params": [rawtx]}
     #send raw tx
-    post_rpc(rpcurl, sendrawpayload)
+    getconf.post_rpc(rpcurl, sendrawpayload)
 
