@@ -67,10 +67,10 @@ def kvsearch_rpc(key):
 # main loop
 latest_printed = {}
 latest_messgs = {}
-new_value = ''
+
 while True:
     # for testing
-    #message = input("Type message: ")
+    #dummy = input("Type message: ")
 
     # iterate over latest_batontxids
     latest_batontxids = get_latest_batontxids()
@@ -95,7 +95,6 @@ while True:
 
                 # if username is set via KV show it
                 if 'value' in kvsearch:
-                    #print(kvsearch['value'])
                     print(datetime.utcfromtimestamp(message_dict['t']).strftime('%D %H:%M') + '[' + kvsearch['value'] + '-' + publisher_id[0:int(VERLEN)] + ']:' + message_dict['m'])
                 else:
                     print(datetime.utcfromtimestamp(message_dict['t']).strftime('%D %H:%M') + '[' + publisher_id[0:int(VERLEN)] + ']:' + message_dict['m'])
@@ -103,5 +102,4 @@ while True:
                 latest_printed[publisher_id] = latest_messgs[publisher_id]
         except:
             latest_printed[publisher_id] = latest_messgs[publisher_id]
-            #print('what')
 

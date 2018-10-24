@@ -7,17 +7,15 @@ import json
 import time
 import getconf
 
-orclid = sys.argv[2]
-chain = sys.argv[1]
+ORCLID = sys.argv[2]
+CHAIN = sys.argv[1]
 
 # construct daemon url
-rpcurl = getconf.def_credentials(chain)
+RPCURL = getconf.def_credentials(CHAIN)
 
 while True:
-    #message = "\"" + str(int(time.time())) + "." + input("Type message: ") + "\""
     message = "{\"t\": " + str(int(time.time())) + ", \"m\": \"" + input("Type message: ") + "\"}"
 
-#{"timestamp": 341234, "message": "iojasdoiaj"}
 
     #convert message to hex
     rawhex = codecs.encode(message).hex()
@@ -47,10 +45,10 @@ while True:
         "jsonrpc": "1.0",
         "id": "python",
         "method": "oraclesdata",
-        "params": [orclid, fullhex]}
+        "params": [ORCLID, fullhex]}
 
     # make oraclesdata rpc call, assign result to rawtx
-    call_result = getconf.post_rpc(rpcurl, orclpayload)
+    call_result = getconf.post_rpc(RPCURL, orclpayload)
     rawtx = call_result['result']['hex']
     
     sendrawpayload = {
@@ -59,5 +57,5 @@ while True:
         "method": "sendrawtransaction",
         "params": [rawtx]}
     #send raw tx
-    getconf.post_rpc(rpcurl, sendrawpayload)
+    getconf.post_rpc(RPCURL, sendrawpayload)
 

@@ -4,6 +4,7 @@ import os
 import requests
 import json
 
+# define function that fetchs rpc creds from .conf
 def def_credentials(chain):
 
     #TODO: add osx/windows support for ac_dir
@@ -34,3 +35,12 @@ def post_rpc(url, payload, auth=None):
         return(json.loads(r.text))
     except Exception as e:
         raise Exception("Couldn't connect to " + url + ": ", e)
+
+# define sendrawtransaction rpc
+def sendrawtx_rpc(RPCURL, rawtx):
+    sendrawpayload = {
+        "jsonrpc": "1.0",
+        "id": "python",
+        "method": "sendrawtransaction",
+        "params": [rawtx]}
+    return(getconf.post_rpc(RPCURL, sendrawpayload))
