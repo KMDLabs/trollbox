@@ -39,7 +39,7 @@ while True:
     #print(oraclesdata_result)
     result = oraclesdata_result['result']
     if result == 'error':
-        print(oraclesdata_result['error'] + ', try using oraclesregister if you have not already')
+        print('ERROR:' + oraclesdata_result['error'] + ', try using oraclesregister if you have not already')
         continue
     rawtx = oraclesdata_result['hex']
 

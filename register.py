@@ -32,3 +32,4 @@ for i in range(int(UTXOS)):
         subscribe_result = getconf.oraclessubscribe_rpc(CHAIN, ORCLID, PUBKEY, AMOUNT)
         print(subscribe_result['error'])
 
+print('wait for oraclessubscribe transactions to confirm before attempting to send message')

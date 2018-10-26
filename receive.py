@@ -35,8 +35,9 @@ while True:
         #oraclessamples_result = get_oracle_samples(batontxid)
         oraclessamples_result = getconf.oraclessamples_rpc(CHAIN, ORCLID, batontxid, str(1))
 
+        #print('oraclessamples_result', oraclessamples_result['samples'][0])
         # ignore empty messages
-        if not oraclessamples_result:
+        if not oraclessamples_result['samples']:
              continue
         else:
              latest_messgs[publisher_id] = oraclessamples_result['samples'][0][0]
