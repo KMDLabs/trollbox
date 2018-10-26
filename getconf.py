@@ -36,16 +36,6 @@ def post_rpc(url, payload, auth=None):
     except Exception as e:
         raise Exception("Couldn't connect to " + url + ": ", e)
 
-# define sendrawtransaction rpc
-def sendrawtx_rpc(chain, rawtx):
-    sendrawpayload = {
-        "jsonrpc": "1.0",
-        "id": "python",
-        "method": "sendrawtransaction",
-        "params": [rawtx]}
-    #rpcurl = def_credentials(chain)
-    return(post_rpc(def_credentials(chain), sendrawpayload))
-
 # Return current -pubkey=
 def getpubkey_rpc(chain):
     getinfo_payload = {
@@ -88,6 +78,21 @@ def kvsearch_rpc(chain, key):
     }
     kvsearch_result = post_rpc(def_credentials(chain), kvsearch_payload)
     return(kvsearch_result['result'])
+
+def kvupdate_rpc(chain, key, value, days, password):
+    # create dynamic oraclessamples payload
+    kvupdate_payload = {
+        "jsonrpc": "1.0",
+        "id": "python",
+        "method": "kvupdate",
+        "params": [
+            key,
+            value,
+            str(days),
+            password]}
+    # make kvupdate rpc call
+    kvupdate_result = post_rpc(def_credentials(chain), kvupdate_payload)
+    return(kvupdate_result)
 
 def oraclesdata_rpc(chain, oracletxid, hexstr):
     oraclesdata_payload = {
