@@ -37,6 +37,8 @@ while True:
     #convert big endian length to little endian, append rawhex to little endian length
     lilend = bigend[2] + bigend[3] + bigend[0] + bigend[1]
     fullhex = lilend + rawhex
+    #print(lilend)
+    #print(rawhex)
     #print(fullhex)
 
     orclpayload = {
@@ -59,13 +61,15 @@ while True:
 
     except:
         call_result = getconf.post_rpc(RPCURL, orclpayload)
-        #print(call_result['hex'])
+        print(call_result['result']['error'])
 
+    #print(rawtx)
     sendrawpayload = {
         "jsonrpc": "1.0",
         "id": "python",
         "method": "sendrawtransaction",
         "params": [rawtx]}
     #send raw tx
+    #print(sendrawpayload)
     getconf.post_rpc(RPCURL, sendrawpayload)
 
