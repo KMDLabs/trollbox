@@ -36,6 +36,11 @@ while True:
 
     #print(fullhex)
     oraclesdata_result = getconf.oraclesdata_rpc(CHAIN, ORCLID, fullhex)
+    #print(oraclesdata_result)
+    result = oraclesdata_result['result']
+    if result == 'error':
+        print(oraclesdata_result['error'] + ', try using oraclesregister if you have not already')
+        continue
     rawtx = oraclesdata_result['hex']
 
     sendrawtx_result = getconf.sendrawtx_rpc(CHAIN, rawtx)
