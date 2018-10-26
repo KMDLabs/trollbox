@@ -12,8 +12,8 @@ CHAIN = sys.argv[1]
 RPCURL = getconf.def_credentials(CHAIN)
 
 while True:
-    message = "{\"t\": " + str(int(time.time())) + ", \"m\": \"" + input("Type message: ") + "\"}"
-
+    message = "[" + str(int(time.time())) + " ,\"" + input("Type message: ") + "\"]"
+#[87938475, "this is a message"]
     #convert message to hex
     rawhex = codecs.encode(message).hex()
 

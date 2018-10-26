@@ -12,7 +12,7 @@ import ast
 from datetime import datetime
 from getconf import *
 
-VERLEN = sys.argv[3]
+VERLEN = '10' or sys.argv[3]
 ORCLID = sys.argv[2]
 CHAIN = sys.argv[1]
 RPCURL = def_credentials(CHAIN)
@@ -90,14 +90,17 @@ while True:
         # print messages if they have updated
         try:
             if latest_printed[publisher_id] != latest_messgs[publisher_id]:
-                message_dict = ast.literal_eval(latest_messgs[publisher_id])
+                message_list = ast.literal_eval(latest_messgs[publisher_id])
+                #print(message_dict)
                 kvsearch = kvsearch_rpc(publisher_id)
 
                 # if username is set via KV show it
                 if 'value' in kvsearch:
-                    print(datetime.utcfromtimestamp(message_dict['t']).strftime('%D %H:%M') + '[' + kvsearch['value'] + '-' + publisher_id[0:int(VERLEN)] + ']:' + message_dict['m'])
+                    #print('h', latest_messgs[publisher_id])
+                    print(datetime.utcfromtimestamp(message_list[0]).strftime('%D %H:%M') + '[' + kvsearch['value'] + '-' + publisher_id[0:int(VERLEN)] + ']:' + message_list[1])
                 else:
-                    print(datetime.utcfromtimestamp(message_dict['t']).strftime('%D %H:%M') + '[' + publisher_id[0:int(VERLEN)] + ']:' + message_dict['m'])
+                    #print('w', latest_messgs[publisher_id])
+                    print(datetime.utcfromtimestamp(message_list[0]).strftime('%D %H:%M') + '[' + publisher_id[0:int(VERLEN)] + ']:' + message_list[1])
 
                 latest_printed[publisher_id] = latest_messgs[publisher_id]
         except:
