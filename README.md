@@ -3,6 +3,8 @@ On chain trollbox for cc activated KMD assetchains based on oracles contract
 ## Dependencies/Prerequisites :
 Komodo asset chains with oracles contract already running with `-pubkey=` set at startup. It is recommend to use a freshly created address. 
 
+The default komodo data directory is set to `$home/.komodo`. If this is not correct for your machine, change it in getconf.py. 
+
 python3 and requests installed 
 ```shell 
 sudo apt-get install python3
