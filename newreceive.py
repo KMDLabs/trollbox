@@ -7,7 +7,6 @@ arg 3 is length of pubkey to show. Usernames can be impersonated, pubkeys cannot
 import sys
 import time
 import codecs
-import pprint
 import ast
 from datetime import datetime
 import getconf

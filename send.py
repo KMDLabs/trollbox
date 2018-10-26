@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
 import sys
 import codecs
-import subprocess
 import requests
-import json
 import time
 import getconf
 
 ORCLID = sys.argv[2]
 CHAIN = sys.argv[1]
-RPCURL = getconf.def_credentials(CHAIN)
 
 while True:
     message = "[" + str(int(time.time())) + " ,\"" + input("Type message: ") + "\"]"
-#[87938475, "this is a message"]
     #convert message to hex
     rawhex = codecs.encode(message).hex()
 
@@ -37,39 +33,10 @@ while True:
     #convert big endian length to little endian, append rawhex to little endian length
     lilend = bigend[2] + bigend[3] + bigend[0] + bigend[1]
     fullhex = lilend + rawhex
-    #print(lilend)
-    #print(rawhex)
+
     #print(fullhex)
+    oraclesdata_result = getconf.oraclesdata_rpc(CHAIN, ORCLID, fullhex)
+    rawtx = oraclesdata_result['hex']
 
-    orclpayload = {
-        "jsonrpc": "1.0",
-        "id": "python",
-        "method": "oraclesdata",
-        "params": [ORCLID, fullhex]}
-
-    # make oraclesdata rpc call, assign result to rawtx
-    call_result = getconf.post_rpc(RPCURL, orclpayload)
-
-    rawtx = ''
-
-    try:
-        call_result = getconf.post_rpc(RPCURL, orclpayload)
-        #print(call_result)
-        rawtx = call_result['result']['hex']
-        sendraw_result = getconf.sendrawtx_rpc(RPCURL, rawtx)
-        #print('oraclesdata:', sendraw_result)
-
-    except:
-        call_result = getconf.post_rpc(RPCURL, orclpayload)
-        print(call_result['result']['error'])
-
-    #print(rawtx)
-    sendrawpayload = {
-        "jsonrpc": "1.0",
-        "id": "python",
-        "method": "sendrawtransaction",
-        "params": [rawtx]}
-    #send raw tx
-    #print(sendrawpayload)
-    getconf.post_rpc(RPCURL, sendrawpayload)
-
+    sendrawtx_result = getconf.sendrawtx_rpc(CHAIN, rawtx)
+    #print(sendrawtx_result)
