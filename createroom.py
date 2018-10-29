@@ -2,7 +2,7 @@
 import sys
 import getconf
 
-CHAIN = 'STAKEDW1' or sys.argv[1]
+CHAIN = sys.argv[1]
 ROOMNAME = sys.argv[2]
 DESCRIPTION = 'CHAT ' + sys.argv[3]
 RPCURL = getconf.def_credentials(CHAIN)
