@@ -4,6 +4,7 @@ import codecs
 import requests
 import time
 import getconf
+import readline
 
 ORCLID = sys.argv[2]
 CHAIN = sys.argv[1]
