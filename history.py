@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# NOT READY, need to rethink the logic of this
 import sys
 import getconf
 import ast
