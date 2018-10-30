@@ -67,6 +67,33 @@ def sendrawtx_rpc(chain, rawtx):
     #rpcurl = def_credentials(chain)
     return(post_rpc(def_credentials(chain), sendrawtx_payload))
 
+def signmessage_rpc(chain, address, message):
+    signmessage_payload = {
+        "jsonrpc": "1.0",
+        "id": "python",
+        "method": "signmessage",
+        "params": [
+            address,
+            message
+        ]
+    }
+    signmessage_result = post_rpc(def_credentials(chain), signmessage_payload)
+    return(signmessage_result['result'])
+
+def verifymessage_rpc(chain, address, signature, message):
+    verifymessage_payload = {
+        "jsonrpc": "1.0",
+        "id": "python",
+        "method": "verifymessage",
+        "params": [
+            address,
+            signature,
+            message
+        ]
+    }
+    verifymessage_result = post_rpc(def_credentials(chain), verifymessage_payload)
+    return(verifymessage_result['result'])
+
 def kvsearch_rpc(chain, key):
     kvsearch_payload = {
         "jsonrpc": "1.0",
