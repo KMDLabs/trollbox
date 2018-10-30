@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-#oraclesregister oracletxid datafee
-#-ac_name=STAKEDED gettransaction 58200ac8742537be73b7dc4f9b0f07548b478c78972e5b3da7a9163b4aeaf0ac
-#oraclessubscribe oracletxid publisher amount
+#TODO use signmessage/verifymessage to show key ownership
 import sys
 import getconf
 

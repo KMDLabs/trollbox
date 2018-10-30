@@ -3,13 +3,17 @@ import re
 import os
 import requests
 import json
+import platform
 
 # define function that fetchs rpc creds from .conf
 def def_credentials(chain):
-
-    #TODO: add osx/windows support for ac_dir
-    ac_dir = os.environ['HOME'] + '/.komodo'
-
+    operating_system = platform.system()
+    if operating_system == 'Darwin':
+        ac_dir = os.environ['HOME'] + '/Library/Application Support/Komodo'
+    elif operating_system == 'Linux':
+        ac_dir = os.environ['HOME'] + '/.komodo'
+    elif operating_system == 'Win64':
+        ac_dir = "dont have windows machine now to test"
     # define config file path
     if chain == 'KMD':
         coin_config_file = str(ac_dir + '/komodo.conf')
@@ -44,7 +48,7 @@ def getpubkey_rpc(chain):
         "method": "getinfo",
         "params": []}
     getinfo_result = post_rpc(def_credentials(chain), getinfo_payload)
-    
+
     return(getinfo_result['result']['pubkey'])
 
 # return latest batontxid from all publishers
