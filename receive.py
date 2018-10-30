@@ -72,7 +72,6 @@ while True:
                     signature = kvsearch_result['value'][:88]
                     value = kvsearch_result['value'][88:]
                     verifymessage_result = getconf.verifymessage_rpc(CHAIN, addr, signature, value)
-                    print(type(verifymessage_result))
                     if verifymessage_result:
                         print(datetime.utcfromtimestamp(message_list[0]).strftime('%D %H:%M') + '[' + kvsearch_result['value'][88:] + '-' + publisher_id[0:int(VERLEN)] + ']:' + message_list[1])
                     else:
