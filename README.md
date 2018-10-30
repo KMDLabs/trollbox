@@ -7,8 +7,8 @@ The default komodo data directory is set to `$home/.komodo`. If this is not corr
 
 python3 and requests installed 
 ```shell 
-sudo apt-get install python3
-sudo apt-get install python3-pip
+sudo apt-get install python3 python3-pip libssl-dev
+pip3 install python-bitcoinlib
 pip3 install requests
 ```
 
