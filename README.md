@@ -38,9 +38,9 @@ Chain:CFEK
 Chain:CFEK
 Roomname:<ROOMNAME>
 ```
-After creating a room, creator must register to it and send a message. The listrooms.py script will show the latest message from the creator pubkey for each room. This allows the room creator to update the description dynamically just by sending a message from creator pubkey. Rooms will not appear in listrooms until creator has sent a message.
+After creating a room, creator must register to it and send a message. The listrooms.py script will show the latest message from the creator pubkey for each room. This allows the room creator to update the description dynamically just by sending a message from creator pubkey. This means the creator pubkey should not be used for chat. It should only be used to update what is shown in listrooms output. Rooms will not appear in listrooms until creator has sent a message.
 
-Register to a room, use the output of listrooms to find an oracletxid
+Register to a room, use the output of listrooms or createroom to find an oracletxid
 ```shell
 ./register CFEK <oracletxid>
 ```
