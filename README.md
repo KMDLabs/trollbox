@@ -15,7 +15,7 @@ pip3 install requests
 ```
 
 ## Tutorial
-These examples will use STAKEDW1, but this will work on any chain with oracles contract activated.
+These examples will use CFEK, but this will work on any chain with oracles contract activated.
 
 Clone this repo
 ```shell
@@ -25,28 +25,32 @@ cd trollbox
 
 Set your display name
 ```shell
-./setusername.py STAKEDW1 <username> <password>
+./setusername.py CFEK <username> <password>
 ```
 
 List rooms or create a new one
 ```shell
-./listrooms.py STAKEDW1
+./listrooms.py
+Chain:CFEK
 ```
 ```shell
-./createroom.py STAKEDW1 <ROOMNAME> <DESCRIPTION>
+./createroom.py 
+Chain:CFEK
+Roomname:<ROOMNAME>
 ```
+After creating a room, creator must register to it and send a message. The listrooms.py script will show the latest message from the creator pubkey for each room. This allows the room creator to update the description dynamically just by sending a message from creator pubkey. Rooms will not appear in listrooms until creator has sent a message.
 
 Register to a room, use the output of listrooms to find an oracletxid
 ```shell
-./register STAKEDW1 <oracletxid>
+./register CFEK <oracletxid>
 ```
 
 Wait for oraclessubscribe txs to confirm, open send script
 ```shell
-./send.py STAKEDW1 <oracletxid>
+./send.py CFEK <oracletxid>
 ```
 
 Open another shell and start receive script
 ```shell
-./receive STAKEDW1 <oracletxid>
+./receive CFEK <oracletxid>
 ```
