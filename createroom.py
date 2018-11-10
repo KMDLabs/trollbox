@@ -2,10 +2,11 @@
 import sys
 import getconf
 
-CHAIN = sys.argv[1]
-ROOMNAME = sys.argv[2]
-DESCRIPTION = 'CHAT ' + sys.argv[3]
-RPCURL = getconf.def_credentials(CHAIN)
+CHAIN = input('Chain:')
+ROOMNAME = input('Roomname:')
+DESCRIPTION = 'DCHAT ' + getconf.getpubkey_rpc(CHAIN)
+
+
 
 try:
     create_result = getconf.oraclescreate_rpc(CHAIN, ROOMNAME, DESCRIPTION, 'S')
