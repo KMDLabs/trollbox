@@ -3,7 +3,7 @@ On chain trollbox for cc activated KMD assetchains based on oracles contract
 ## Dependencies/Prerequisites :
 Komodo asset chains with oracles contract already running with `-pubkey=` set at startup. It is recommend to use a freshly created address. 
 
-For the time being, komodod must be blackjok3r branch of StakedChain/komodo or FSM branch of jl777/komodo
+For the time being, komodod must be master branch of StakedChain/komodo or jl777 branch of jl777/komodo
 
 The default komodo data directory is set to `$home/.komodo`. If this is not correct for your machine, change ac_dir in getconf.py. 
 
